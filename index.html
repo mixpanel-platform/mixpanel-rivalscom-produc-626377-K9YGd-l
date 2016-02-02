@@ -35,7 +35,7 @@
       var PageViewsLine  = $('#PageViews').MPChart({chartType: 'line'});
       var ArticlesLine  = $('#Articles').MPChart({chartType: 'line'});
       var MBThreadsLine  = $('#Content').MPChart({chartType: 'line'});
-      var TopContentLine  = $('#TopContent').MPChart({chartType: 'bar'});
+      var TopContentBar  = $('#TopContent').MPChart({chartType: 'bar'});
       var SubSuccessLine  = $('#SubSuccess').MPChart({chartType: 'line'});
       var LapsedVSUnlapsedLine  = $('#LapsedVSUnlapsed').MPChart({chartType: 'line'});
      
@@ -68,6 +68,7 @@
       var segmentTopContentParams = {
             from: moment().subtract('30', 'days'),
             to: moment(),
+            limit: '10',
             type: 'general',
             unit: 'day',
             where: 'properties["team_affiliated"] == "Alabama"' ,

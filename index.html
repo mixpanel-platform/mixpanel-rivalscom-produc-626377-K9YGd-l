@@ -43,50 +43,50 @@
             from: moment().subtract('30', 'days'),
             to: moment(),
             type: 'general',
-            unit: 'day'
-            where: 'properties["team_affiliated"] == "Alabama"'
+            unit: 'day',
+            where: 'properties["team_affiliated"] == "Alabama"',
       };
       
       var segmentArticlesParams = {
             from: moment().subtract('30', 'days'),
             to: moment(),
             type: 'general',
-            unit: 'day'
-            where: 'properties["Content Type"] == "Article"'
-            where: 'properties["team_affiliated"] == "Alabama"'
+            unit: 'day',
+            where: 'properties["Content Type"] == "Article"',
+            where: 'properties["team_affiliated"] == "Alabama"',
       };
       
       var segmentMBThreadsParams = {
             from: moment().subtract('30', 'days'),
             to: moment(),
             type: 'general',
-            unit: 'day'
-            where: 'properties["Content Type"] == "MB Thread"'
-            where: 'properties["team_affiliated"] == "Alabama"'
+            unit: 'day',
+            where: 'properties["Content Type"] == "MB Thread"',
+            where: 'properties["team_affiliated"] == "Alabama"',
       };
       
       var segmentTopContentParams = {
             from: moment().subtract('30', 'days'),
             to: moment(),
             type: 'general',
-            unit: 'day'
-            where: 'properties["team_affiliated"] == "Alabama"' 
+            unit: 'day',
+            where: 'properties["team_affiliated"] == "Alabama"' ,
       };
       
       var eventsSubSuccessParams = {
             from: moment().subtract('30', 'days'),
             to: moment(),
             type: 'general',
-            unit: 'day'
-            where: 'properties["team_affiliated"] == "Alabama"'
+            unit: 'day',
+            where: 'properties["team_affiliated"] == "Alabama"',
       };
 
       var eventsLapsedVSUnlapsedParams = {
             from: moment().subtract('30', 'days'),
             to: moment(),
             type: 'general',
-            unit: 'day'
-            where: 'properties["team_affiliated"] == "Alabama"'
+            unit: 'day',
+            where: 'properties["team_affiliated"] == "Alabama"',
       };
 
       runQuery();
@@ -98,6 +98,8 @@
             
             PageViewsLine.MPChart('setData', results)
         });
+        
+        console.log(results)
             
         //Article Content Data
         

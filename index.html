@@ -117,7 +117,7 @@
         
         //Top Content Data
         
-        MP.api.segment('Content', 'Title' segmentTopContentParams).done(function(results) {
+        MP.api.segment('Content', 'Title', segmentTopContentParams).done(function(results) {
             
             TopContentLine.MPChart('setData', results);
         });

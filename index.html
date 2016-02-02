@@ -35,8 +35,10 @@
       var TopContentLine  = $('#TopContent').MPChart({chartType: 'line'});
       var SubSuccessLine  = $('#SubSuccess').MPChart({chartType: 'line'});
       var LapsedVSUnlapsedLine  = $('#LapsedVSUnlapsed').MPChart({chartType: 'line'});
-      var MPDatePicker  = $('#datepicker').MPDatepicker().on('change', function(dateRange))
-
+      var dateSelector  = $('#datepicker').appendTo('body').MPDatepicker();
+          dateSelector.on('change', function(e, dates) {
+            alert('From: ' + date.from + '\nTo: ' + dates.to);
+          });
 
       var past30GoogleParams = {
             from: moment().subtract('30', 'days'),

@@ -20,7 +20,7 @@
       <div id="SubSuccess" class="report"></div>
       <div id="LapsedVSUnlapsed" class="report"></div>
     </div>
-    <div class="mpdatepicker"></div>
+    <div class="datepicker"></div>
     <style>
     h1 {
       font-size: 20px;
@@ -31,19 +31,13 @@
     }
     </style>
     <script>
-      var past30DayGooglePie  = $('#30DayGooglePie').MPChart({chartType: 'pie'});
-      var past30DayGoogleTable  = $('#30DayGoogleTable').MPTable({
-        showPercentages: 'true',
-        firstColHeader: 'Game Vendor'
-      });
-      var past30DayMopubPie  = $('#30DayMopubPie').MPChart({chartType: 'pie'});
-      var past30DayMopubTable  = $('#30DayMopubTable').MPTable({
-        showPercentages: 'true',
-        firstColHeader: 'Game Vendor'
-      });
+      var PageViewsLine  = $('#PageViews').MPChart({chartType: 'line'});
+      var TopContentLine  = $('#TopContent').MPChart({chartType: 'line'});
+      var SubSuccessLine  = $('#SubSuccess').MPChart({chartType: 'line'});
+      var LapsedVSUnlapsedLine  = $('#LapsedVSUnlapsed').MPChart({chartType: 'line'});
+      var MPDatePicker  = $('#datepicker').MPDatepicker().on('change', function(dateRange))
 
-      var past30DayEvents = $('#30DayEvents').MPChart({chartType: 'line'});
-     
+
       var past30GoogleParams = {
             from: moment().subtract('30', 'days'),
             to: moment(),

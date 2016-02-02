@@ -7,9 +7,133 @@
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
   </head>
   <body class="mixpanel-platform-body">
-    <h1>Hello, World!</h1>
+    
+    <div class="mixpanel-platform-section">
+      <h1>Page Views & Content Clicks</h1>
+      <div style="clear: both;"></div>
+      <div id="PageViews" class="report"></div>
+      <div id="TopContent" class="report"></div>
+    </div>
+    <div class="mixpanel-platform-section">
+      <h1>Subscriptions</h1>
+      <div style="clear: both;"></div>
+      <div id="SubSuccess" class="report"></div>
+      <div id="LapsedVSUnlapsed" class="report"></div>
+    </div>
+    <div class="mpdatepicker"></div>
+    <style>
+    h1 {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+    .report {
+     margin: 15px 0; 
+    }
+    </style>
     <script>
-      // Run queries and display results here
+      var past30DayGooglePie  = $('#30DayGooglePie').MPChart({chartType: 'pie'});
+      var past30DayGoogleTable  = $('#30DayGoogleTable').MPTable({
+        showPercentages: 'true',
+        firstColHeader: 'Game Vendor'
+      });
+      var past30DayMopubPie  = $('#30DayMopubPie').MPChart({chartType: 'pie'});
+      var past30DayMopubTable  = $('#30DayMopubTable').MPTable({
+        showPercentages: 'true',
+        firstColHeader: 'Game Vendor'
+      });
+
+      var past30DayEvents = $('#30DayEvents').MPChart({chartType: 'line'});
+     
+      var past30GoogleParams = {
+            from: moment().subtract('30', 'days'),
+            to: moment(),
+            type: 'general',
+            where: 'properties["SSP"] == "google"'
+      };
+
+      var past30MopubParams = {
+           from: moment().subtract('30', 'days'),
+           to: moment(),
+           type: 'general',
+           where: 'properties["SSP"] == "mopub"'
+      }; 
+
+      var past30DayParams = {
+        type: 'general',
+        unit: 'day',
+        interval: '30'
+      }
+      
+      var $mpdatepicker = $('.mpdatepicker').MPDatepicker();
+      runQuery($mpdatepicker.val().from, $mpdatepicker.val().to);
+      $mpdatepicker.on('change', function(e, dates) {
+        document.getElementById("resultstable").remove();
+        runQuery(dates.from, dates.to);
+    });
+    function runQuery(from, to) {
+      var row;
+      var id;
+      var conv;
+
+      var filter = '(string(properties["Creative ID"]) == "19673" or ' +
+                    'string(properties["Creative ID"]) == "19726" or ' +
+                    'string(properties["Creative ID"]) == "19675")';
+      var startDate = from;
+      var endDate = to;
+      var segment = 'Creative ID'
+      var params = {'from': startDate,
+                    'to': endDate,
+                    'where': filter,
+                    'segment': segment};
+
+      runQuery();
+       function runQuery() {
+        
+        //Google Pie Chart Data
+        
+        MP.api.segment('Ad Loaded', 'Game Vendor', past30GoogleParams).done(function(results) {
+            
+            past30DayGooglePie.MPChart('setData', results);
+            past30DayGoogleTable.MPTable('setData', results);
+
+        //Mopub Pie Chart Data
+        
+        MP.api.segment('Ad Loaded', 'Game Vendor', past30MopubParams).done(function(results) {
+            
+            past30DayMopubPie.MPChart('setData', results);
+            past30DayMopubTable.MPTable('setData', results);
+
+        });
+      });
+
+        //Relevant Events Line Chart
+
+        MP.api.events('Ad Loaded', 'Game Loaded', 'Click to App Store', 'Ad Cached', 'First User Action', past30DayParams).done(function(results) {
+
+            past30DayEvents.MPChart('setData', results);
+
+        });
+      }
+      
+      //Conversion Table
+      
+        MP.api.funnel('Ad Loaded', 'Install', params).done(function(results) {
+          var res = {};
+          for (var k in results) {
+            res[k] = {};
+            for (var j in results[k]) {
+              res[k][j] = results[k][j]['1'].overall_conv_ratio * 1000;
+            }
+          }
+          $('<div id="resultstable"></div>').appendTo('body').MPTable({ 
+            data: res,
+            showPercentages: true,
+            firstColHeader: segment
+        });
+      });
+    }
+
+
     </script>
   </body>
 </html>

@@ -12,8 +12,7 @@
       <h1>Page Views & Content Clicks</h1>
       <div style="clear: both;"></div>
       <div id="PageViews" class="report"></div>
-      <div id="Articles" class="report"></div>
-      <div id="MBThreads" class="report"></div>
+      <div id="Content" class="report"></div>
       <div id="TopContent" class="report"></div>
     </div>
     <div class="mixpanel-platform-section">
@@ -33,8 +32,7 @@
     </style>
     <script>
       var PageViewsLine  = $('#PageViews').MPChart({chartType: 'line'});
-      var ArticlesLine  = $('#Articles').MPChart({chartType: 'line'});
-      var MBThreadsLine  = $('#Content').MPChart({chartType: 'line'});
+      var ContentLine  = $('#Content').MPChart({chartType: 'line'});
       var TopContentBar  = $('#TopContent').MPChart({chartType: 'bar'});
       var SubSuccessLine  = $('#SubSuccess').MPChart({chartType: 'line'});
       var LapsedVSUnlapsedLine  = $('#LapsedVSUnlapsed').MPChart({chartType: 'line'});
@@ -47,21 +45,11 @@
             where: 'properties["team_affiliated"] == "Alabama"',
       };
       
-      var segmentArticlesParams = {
+      var eventsContentParams = {
             from: moment().subtract('30', 'days'),
             to: moment(),
             type: 'general',
             unit: 'day',
-            where: 'properties["Content Type"] == "Article"',
-            where: 'properties["team_affiliated"] == "Alabama"',
-      };
-      
-      var segmentMBThreadsParams = {
-            from: moment().subtract('30', 'days'),
-            to: moment(),
-            type: 'general',
-            unit: 'day',
-            where: 'properties["Content Type"] == "MB Thread"',
             where: 'properties["team_affiliated"] == "Alabama"',
       };
       
@@ -100,25 +88,18 @@
             PageViewsLine.MPChart('setData', results)
         });
         
-        //Article Content Data
+        //Content Data
         
-        MP.api.segment('Content', segmentArticlesParams).done(function(results) {
+        MP.api.events('$custom_event:125637', '$custom_event:125635', eventsContentParams).done(function(results) {
             
-            ArticlesLine.MPChart('setData', results);
+            ContentLine.MPChart('setData', results);
         });
             
-        //MB Threads Content Data
-        
-        MP.api.segment('Content', segmentMBThreadsParams).done(function(results) {
-            
-            MBThreadsLine.MPChart('setData', results);
-        });
-        
         //Top Content Data
         
         MP.api.segment('Content', 'Title', segmentTopContentParams).done(function(results) {
             
-            TopContentLine.MPChart('setData', results);
+            TopContentBar.MPChart('setData', results);
         });
         
         //Sub Success Data

@@ -20,7 +20,6 @@
       <div id="SubSuccess" class="report"></div>
       <div id="LapsedVSUnlapsed" class="report"></div>
     </div>
-    <div class="datepicker"></div>
     <style>
     h1 {
       font-size: 20px;
@@ -35,16 +34,41 @@
       var TopContentLine  = $('#TopContent').MPChart({chartType: 'line'});
       var SubSuccessLine  = $('#SubSuccess').MPChart({chartType: 'line'});
       var LapsedVSUnlapsedLine  = $('#LapsedVSUnlapsed').MPChart({chartType: 'line'});
-      var dateSelector  = $('#datepicker').appendTo('body').MPDatepicker();
-          dateSelector.on('change', function(e, dates) {
-            alert('From: ' + date.from + '\nTo: ' + dates.to);
-          });
-
-      var past30GoogleParams = {
+     
+      var eventsIndexPageParams = {
             from: moment().subtract('30', 'days'),
             to: moment(),
             type: 'general',
-            where: 'properties["SSP"] == "google"'
+            unit: 'day'
+            where: 'properties["team_affiliated"] == "Alabama"'
+      };
+      
+      var eventsAContentParams = {
+            from: moment().subtract('30', 'days'),
+            to: moment(),
+            type: 'general',
+            unit: 'day'
+            where: 'properties["Content Type"] == "Article"'
+            where: 'properties["team_affiliated"] == "Alabama"'
+      };
+      
+      var eventsMBContentParams = {
+            from: moment().subtract('30', 'days'),
+            to: moment(),
+            type: 'general',
+            unit: 'day'
+            where: 'properties["Content Type"] == "MB Thread"'
+            where: 'properties["team_affiliated"] == "Alabama"'
+      };
+      
+      var eventsTopContentParams = {
+            from: moment().subtract('30', 'days'),
+            to: moment(),
+            type: 'general',
+            unit: 'day'
+            where: 'properties["team_affiliated"] == "Alabama"'
+            segment: 'Title'
+
       };
 
       var past30MopubParams = {

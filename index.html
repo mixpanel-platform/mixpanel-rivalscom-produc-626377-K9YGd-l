@@ -123,9 +123,9 @@
         
         //Content by OS Data
         
-        MP.api.segment('Content', '$os', segmentTopContentParams).done(function(results) {
+        MP.api.segment('Content', '$os', segmentContentbyOSParams).done(function(results) {
             
-            TopContentBar.MPChart('setData', results);
+            ContentbyOSBar.MPChart('setData', results);
         });
         
         //Sub Success Data

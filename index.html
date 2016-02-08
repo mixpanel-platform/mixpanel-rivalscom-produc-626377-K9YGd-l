@@ -9,10 +9,14 @@
   <body class="mixpanel-platform-body">
     
     <div class="mixpanel-platform-section">
-      <h1>Page Views & Content Clicks</h1>
+      <h1>Total Page Views</h1>
       <div style="clear: both;"></div>
       <div id="PageViews" class="report"></div>
+      <h1>Article & Message Board Clicks</h1>
+      <div style="clear: both;"></div>
       <div id="Content" class="report"></div>
+      <h1>Top 10 Content Items of the Week</h1>
+      <div style="clear: both;"></div>
       <div id="TopContent" class="report"></div>
     </div>
     <div class="mixpanel-platform-section">
@@ -46,7 +50,7 @@
       };
       
       var eventsContentParams = {
-            from: moment().subtract('30', 'days'),
+            from: moment().subtract('7', 'days'),
             to: moment(),
             type: 'general',
             unit: 'day',

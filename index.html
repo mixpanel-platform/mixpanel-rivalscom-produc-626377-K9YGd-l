@@ -43,6 +43,7 @@
       var PageViewsLine  = $('#PageViews').MPChart({chartType: 'line'});
       var ContentLine  = $('#Content').MPChart({chartType: 'line'});
       var TopContentBar  = $('#TopContent').MPChart({chartType: 'bar'});
+      var ContentbyOSBar  = $('#ContentbyOS').MPChart({chartType: 'bar'});
       var SubSuccessLine  = $('#SubSuccess').MPChart({chartType: 'line'});
       var LapsedVSUnlapsedLine  = $('#LapsedVSUnlapsed').MPChart({chartType: 'line'});
      
@@ -63,6 +64,15 @@
       };
       
       var segmentTopContentParams = {
+            from: moment().subtract('30', 'days'),
+            to: moment(),
+            limit: '10',
+            type: 'general',
+            unit: 'day',
+            where: 'properties["team_affiliated"] == "Alabama"' ,
+      };
+      
+      var segmentContentbyOSParams = {
             from: moment().subtract('30', 'days'),
             to: moment(),
             limit: '10',
@@ -107,6 +117,13 @@
         //Top Content Data
         
         MP.api.segment('Content', 'Title', segmentTopContentParams).done(function(results) {
+            
+            TopContentBar.MPChart('setData', results);
+        });
+        
+        //Content by OS Data
+        
+        MP.api.segment('Content', '$os', segmentTopContentParams).done(function(results) {
             
             TopContentBar.MPChart('setData', results);
         });
